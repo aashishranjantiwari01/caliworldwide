@@ -461,6 +461,7 @@
 
     .product-card__body {
       padding: 10px 12px 14px;
+      border-top: 1.5px solid rgba(201, 168, 76, 0.35);
     }
 
     .product-card__name {
@@ -543,6 +544,7 @@
 
       .product-card__body {
         padding: 18px 20px 20px;
+        border-top-width: 2px;
       }
 
       .product-card__name {
@@ -809,6 +811,133 @@
       font-size: 2.5rem;
       opacity: 0.2;
     }
+
+    /* ===== IMAGE LIGHTBOX ===== */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lightbox__img-container {
+      position: relative;
+      max-width: 90vw;
+      max-height: 85vh;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+      transform: scale(0.85);
+      transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .lightbox.active .lightbox__img-container {
+      transform: scale(1);
+    }
+
+    .lightbox__img {
+      display: block;
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      cursor: grab;
+      transition: transform 0.2s ease;
+      transform-origin: center center;
+    }
+
+    .lightbox__img.dragging {
+      cursor: grabbing;
+      transition: none;
+    }
+
+    .lightbox__close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 10001;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(5, 5, 5, 0.7);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      color: var(--gold);
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .lightbox__close:hover {
+      background: rgba(201, 168, 76, 0.15);
+      border-color: var(--gold);
+      transform: scale(1.1);
+    }
+
+    .lightbox__controls {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10001;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .lightbox__zoom-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(5, 5, 5, 0.7);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      color: var(--gold);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .lightbox__zoom-btn:hover {
+      background: rgba(201, 168, 76, 0.15);
+      border-color: var(--gold);
+    }
+
+    .lightbox__zoom-level {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    /* Make product images look clickable */
+    .product-card__img {
+      cursor: zoom-in;
+    }
   </style>
 </head>
 
@@ -840,51 +969,20 @@
 
   <!-- FILTER BAR -->
   <div class="filter-bar reveal">
-    <span class="filter-bar__count">Showing <strong id="product-count">4</strong> strains</span>
+    <span class="filter-bar__count">Showing <strong id="product-count">17</strong> strains</span>
   </div>
 
   <!-- PRODUCT GRID -->
   <div class="catalog-grid" id="catalog-grid">
 
-    <!-- Card 1: Black Widow -->
+    <!-- 1: Baja Blast -->
     <article class="product-card reveal">
       <div class="product-card__img-wrap">
-        <img src="black-widow.png" alt="Black Widow cannabis strain" class="product-card__img" loading="lazy" />
-        <span class="product-card__badge">Top Seller</span>
-      </div>
-      <div class="product-card__body">
-        <h3 class="product-card__name">BLACK WIDOW</h3>
-        <p class="product-card__strain">Indica Dominant</p>
-        <div class="product-card__footer">
-          <p class="product-card__price">$1,350</p>
-          <a href="#order" class="btn--contact">Contact</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Card 2: Papaya Lemonade -->
-    <article class="product-card reveal reveal-delay-1">
-      <div class="product-card__img-wrap">
-        <img src="papaya-lemonade.png" alt="Papaya Lemonade cannabis strain" class="product-card__img" loading="lazy" />
-      </div>
-      <div class="product-card__body">
-        <h3 class="product-card__name">PAPAYA LEMONADE</h3>
-        <p class="product-card__strain">Hybrid</p>
-        <div class="product-card__footer">
-          <p class="product-card__price">$1,300</p>
-          <a href="#order" class="btn--contact">Contact</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- Card 3: Baja Blast -->
-    <article class="product-card reveal reveal-delay-2">
-      <div class="product-card__img-wrap">
-        <img src="baja-blast.png" alt="Baja Blast cannabis strain" class="product-card__img" loading="lazy" />
+        <img src="Baja Blast $1750.png" alt="Baja Blast strain" class="product-card__img" loading="lazy" />
+        <span class="product-card__badge">Top Shelf</span>
       </div>
       <div class="product-card__body">
         <h3 class="product-card__name">BAJA BLAST</h3>
-        <p class="product-card__strain">Sativa Dominant</p>
         <div class="product-card__footer">
           <p class="product-card__price">$1,750</p>
           <a href="#order" class="btn--contact">Contact</a>
@@ -892,43 +990,233 @@
       </div>
     </article>
 
-    <!-- Card 4: Pineapple Express -->
-    <article class="product-card reveal reveal-delay-3">
+    <!-- 2: Frozen Starburst -->
+    <article class="product-card reveal">
       <div class="product-card__img-wrap">
-        <img src="pineapple-express.png" alt="Pineapple Express cannabis strain" class="product-card__img" loading="lazy" />
+        <img src="Frozen Starbust $1400.png" alt="Frozen Starburst strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">FROZEN STARBURST</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$1,400</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3: Black Widow -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="Black Widow $1350.png" alt="Black Widow strain" class="product-card__img" loading="lazy" />
+        <span class="product-card__badge">Top Seller</span>
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">BLACK WIDOW</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$1,350</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4: Lemon Heads -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="Lemom Heads $1350.png" alt="Lemon Heads strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">LEMON HEADS</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$1,350</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 5: Papaya Lemonade -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="Papaya Lemonade $1300.png" alt="Papaya Lemonade strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">PAPAYA LEMONADE</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$1,300</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 6: Burberry Gruntz -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="Burberry gruntz $1300.png" alt="Burberry Gruntz strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">BURBERRY GRUNTZ</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$1,300</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 7: Cherry Thinmints -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="Cherry thinmints $1100.png" alt="Cherry Thinmints strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">CHERRY THINMINTS</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$1,100</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 8: Papaya Runtz -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="Papaya Runtz $1000.png" alt="Papaya Runtz strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">PAPAYA RUNTZ</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$1,000</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 9: Poison Pop Rocks -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="Poison Pop Rocks $950.png" alt="Poison Pop Rocks strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">POISON POP ROCKS</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$950</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 10: Pineapple Express -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="Pineapple Express $900.png" alt="Pineapple Express strain" class="product-card__img" loading="lazy" />
       </div>
       <div class="product-card__body">
         <h3 class="product-card__name">PINEAPPLE EXPRESS</h3>
-        <p class="product-card__strain">Hybrid</p>
         <div class="product-card__footer">
-          <p class="product-card__price">$990</p>
+          <p class="product-card__price">$900</p>
           <a href="#order" class="btn--contact">Contact</a>
         </div>
       </div>
     </article>
 
-    <!--
-    ============================================
-    ADD MORE PRODUCTS BELOW
-    Copy this template for each new product:
-
+    <!-- 11: Candy Runtz -->
     <article class="product-card reveal">
       <div class="product-card__img-wrap">
-        <img src="YOUR-IMAGE.png" alt="Strain name" class="product-card__img" loading="lazy" />
+        <img src="Candy Runtz $850.png" alt="Candy Runtz strain" class="product-card__img" loading="lazy" />
       </div>
       <div class="product-card__body">
-        <h3 class="product-card__name">STRAIN NAME</h3>
-        <p class="product-card__strain">Indica / Sativa / Hybrid</p>
+        <h3 class="product-card__name">CANDY RUNTZ</h3>
         <div class="product-card__footer">
-          <p class="product-card__price">$PRICE</p>
+          <p class="product-card__price">$850</p>
           <a href="#order" class="btn--contact">Contact</a>
         </div>
       </div>
     </article>
-    ============================================
-    -->
+
+    <!-- 12: Strawberry Jam -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="Strawberry Jam $850.png" alt="Strawberry Jam strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">STRAWBERRY JAM</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$850</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 13: White Cherry -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="White Cherry $850.png" alt="White Cherry strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">WHITE CHERRY</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$850</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 14: Slurricane -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="Slurricane $750.png" alt="Slurricane strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">SLURRICANE</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$750</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 15: Sour Grapes -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="Sour Grapes $750.png" alt="Sour Grapes strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">SOUR GRAPES</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$750</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 16: White Nerdz -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="White Nerdz $700.png" alt="White Nerdz strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">WHITE NERDZ</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$700</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- 17: Bobby -->
+    <article class="product-card reveal">
+      <div class="product-card__img-wrap">
+        <img src="Bobby $550.png" alt="Bobby strain" class="product-card__img" loading="lazy" />
+      </div>
+      <div class="product-card__body">
+        <h3 class="product-card__name">BOBBY</h3>
+        <div class="product-card__footer">
+          <p class="product-card__price">$550</p>
+          <a href="#order" class="btn--contact">Contact</a>
+        </div>
+      </div>
+    </article>
 
   </div>
+
 
   <!-- ORDER CTA -->
   <section class="order-cta" id="order">
@@ -974,6 +1262,19 @@
   <!-- BACK TO TOP -->
   <button class="back-to-top" id="back-to-top" aria-label="Back to top">↑</button>
 
+  <!-- IMAGE LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" id="lightbox-close" aria-label="Close">✕</button>
+    <div class="lightbox__img-container" id="lightbox-container">
+      <img src="" alt="" class="lightbox__img" id="lightbox-img" />
+    </div>
+    <div class="lightbox__controls">
+      <button class="lightbox__zoom-btn" id="lightbox-zoom-out" aria-label="Zoom out">−</button>
+      <span class="lightbox__zoom-level" id="lightbox-zoom-level">100%</span>
+      <button class="lightbox__zoom-btn" id="lightbox-zoom-in" aria-label="Zoom in">+</button>
+    </div>
+  </div>
+
   <script>
     /* ===== SCROLL REVEAL ===== */
     const revealObserver = new IntersectionObserver((entries) => {
@@ -1003,6 +1304,128 @@
     /* ===== UPDATE PRODUCT COUNT ===== */
     const productCount = document.querySelectorAll('.product-card:not(.product-card--placeholder)').length;
     document.getElementById('product-count').textContent = productCount;
+
+    /* ===== IMAGE LIGHTBOX ===== */
+    (function () {
+      var lightbox = document.getElementById('lightbox');
+      var lightboxImg = document.getElementById('lightbox-img');
+      var lightboxClose = document.getElementById('lightbox-close');
+      var lightboxContainer = document.getElementById('lightbox-container');
+      var zoomInBtn = document.getElementById('lightbox-zoom-in');
+      var zoomOutBtn = document.getElementById('lightbox-zoom-out');
+      var zoomLevelEl = document.getElementById('lightbox-zoom-level');
+      var currentZoom = 1;
+      var isDragging = false;
+      var startX = 0, startY = 0, translateX = 0, translateY = 0, lastTx = 0, lastTy = 0;
+
+      function openLightbox(src, alt) {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt || '';
+        currentZoom = 1;
+        translateX = 0; translateY = 0; lastTx = 0; lastTy = 0;
+        updateTransform();
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = '';
+        setTimeout(function () { lightboxImg.src = ''; }, 350);
+      }
+
+      function setZoom(z) {
+        currentZoom = Math.min(Math.max(z, 0.5), 5);
+        if (currentZoom <= 1) { translateX = 0; translateY = 0; lastTx = 0; lastTy = 0; }
+        updateTransform();
+      }
+
+      function updateTransform() {
+        lightboxImg.style.transform = 'scale(' + currentZoom + ') translate(' + translateX + 'px, ' + translateY + 'px)';
+        zoomLevelEl.textContent = Math.round(currentZoom * 100) + '%';
+      }
+
+      // Open on product image click
+      document.querySelectorAll('.product-card__img').forEach(function (img) {
+        img.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openLightbox(img.src, img.alt);
+        });
+      });
+
+      // Close
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+      });
+
+      // Zoom buttons
+      zoomInBtn.addEventListener('click', function (e) { e.stopPropagation(); setZoom(currentZoom + 0.3); });
+      zoomOutBtn.addEventListener('click', function (e) { e.stopPropagation(); setZoom(currentZoom - 0.3); });
+
+      // Scroll wheel zoom
+      lightboxContainer.addEventListener('wheel', function (e) {
+        e.preventDefault();
+        var delta = e.deltaY > 0 ? -0.15 : 0.15;
+        setZoom(currentZoom + delta);
+      }, { passive: false });
+
+      // Drag to pan when zoomed
+      lightboxImg.addEventListener('mousedown', function (e) {
+        if (currentZoom <= 1) return;
+        e.preventDefault();
+        isDragging = true;
+        startX = e.clientX; startY = e.clientY;
+        lightboxImg.classList.add('dragging');
+      });
+      document.addEventListener('mousemove', function (e) {
+        if (!isDragging) return;
+        translateX = lastTx + (e.clientX - startX) / currentZoom;
+        translateY = lastTy + (e.clientY - startY) / currentZoom;
+        updateTransform();
+      });
+      document.addEventListener('mouseup', function () {
+        if (!isDragging) return;
+        isDragging = false;
+        lastTx = translateX; lastTy = translateY;
+        lightboxImg.classList.remove('dragging');
+      });
+
+      // Touch support for mobile
+      lightboxImg.addEventListener('touchstart', function (e) {
+        if (currentZoom <= 1 || e.touches.length !== 1) return;
+        isDragging = true;
+        startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+        lightboxImg.classList.add('dragging');
+      }, { passive: true });
+      lightboxImg.addEventListener('touchmove', function (e) {
+        if (!isDragging || e.touches.length !== 1) return;
+        translateX = lastTx + (e.touches[0].clientX - startX) / currentZoom;
+        translateY = lastTy + (e.touches[0].clientY - startY) / currentZoom;
+        updateTransform();
+      }, { passive: true });
+      lightboxImg.addEventListener('touchend', function () {
+        if (!isDragging) return;
+        isDragging = false;
+        lastTx = translateX; lastTy = translateY;
+        lightboxImg.classList.remove('dragging');
+      });
+
+      // Double-tap / double-click to toggle zoom
+      var lastTap = 0;
+      lightboxImg.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var now = Date.now();
+        if (now - lastTap < 350) {
+          setZoom(currentZoom > 1 ? 1 : 2.5);
+        }
+        lastTap = now;
+      });
+    })();
   </script>
 </body>
 

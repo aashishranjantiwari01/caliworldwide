@@ -1302,6 +1302,74 @@
       }
     }
 
+    /* ===== ALL CANNABIS CTA SECTION ===== */
+    .all-cannabis-cta {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 20px 70px;
+      position: relative;
+      background: var(--bg-primary);
+      overflow: hidden;
+    }
+
+    .all-cannabis-cta__wrapper {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .all-cannabis-cta__glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.25) 0%, rgba(201, 168, 76, 0.08) 45%, transparent 70%);
+      filter: blur(45px);
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.85;
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      animation: gentle-glow-pulse 6s ease-in-out infinite;
+    }
+
+    @keyframes gentle-glow-pulse {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translate(-50%, -50%) scale(1.15);
+        opacity: 1;
+        filter: blur(50px);
+      }
+    }
+
+    .all-cannabis-cta__btn {
+      position: relative;
+      z-index: 2;
+      font-size: 0.95rem !important;
+      padding: 18px 50px !important;
+      border-radius: 12px !important;
+      border: 1.5px solid rgba(201, 168, 76, 0.5) !important;
+      box-shadow: 0 4px 30px rgba(201, 168, 76, 0.12), inset 0 1px 0 rgba(201, 168, 76, 0.2) !important;
+    }
+
+    .all-cannabis-cta__btn:hover {
+      box-shadow: 0 10px 40px rgba(201, 168, 76, 0.25), inset 0 1px 0 rgba(201, 168, 76, 0.3), 0 0 15px rgba(201, 168, 76, 0.15) !important;
+    }
+
+    .all-cannabis-cta__wrapper:hover .all-cannabis-cta__glow {
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(201, 168, 76, 0.38) 0%, rgba(201, 168, 76, 0.12) 50%, transparent 75%);
+      filter: blur(55px);
+    }
+
     /* ===== PRODUCTS ===== */
     .products {
       padding: 80px 20px;
@@ -1846,6 +1914,17 @@
         <span class="social-btn__arrow">→</span>
       </a>
 
+    </div>
+  </section>
+
+  <!-- ALL CANNABIS CTA -->
+  <section class="all-cannabis-cta" id="all-cannabis-cta">
+    <div class="all-cannabis-cta__wrapper">
+      <div class="all-cannabis-cta__glow"></div>
+      <a href="catalog.html" class="btn--glass all-cannabis-cta__btn reveal">
+        ALL CANNABIS
+        <span class="btn--glass__arrow">→</span>
+      </a>
     </div>
   </section>
 
