@@ -1709,10 +1709,257 @@
     ::-webkit-scrollbar-thumb:hover {
       background: rgba(201, 168, 76, 0.5);
     }
+
+    /* ===== PASSWORD LOCK SCREEN ===== */
+    html.locked body > :not(#lock-screen):not(.noise-overlay) {
+      display: none !important;
+    }
+    html.locked body {
+      overflow: hidden !important;
+      background: #050505 !important;
+    }
+    #lock-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(rgba(5, 5, 5, 0.78), rgba(5, 5, 5, 0.88)), url('catalog-banner.PNG') no-repeat center center / cover;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+    html.locked #lock-screen {
+      display: flex !important;
+    }
+    #lock-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+    #lock-screen .lock-container {
+      background: rgba(13, 13, 13, 0.75);
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      border-radius: 24px;
+      padding: 40px 30px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(201, 168, 76, 0.15);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      animation: lockAppear 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    @keyframes lockAppear {
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+    .lock-logo-wrap {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      box-shadow: 0 0 25px rgba(201, 168, 76, 0.3);
+      overflow: hidden;
+      background: #050505;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lock-logo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .lock-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .lock-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .lock-subtitle {
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .lock-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .lock-input-group {
+      width: 100%;
+    }
+    .lock-input {
+      width: 100%;
+      padding: 14px 20px;
+      background: rgba(201, 168, 76, 0.05);
+      border: 1.5px solid rgba(201, 168, 76, 0.3);
+      border-radius: 10px;
+      color: #f5f0e8;
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      outline: none;
+      transition: all 0.3s ease;
+      text-align: center;
+      letter-spacing: 0.25em;
+    }
+    .lock-input:focus {
+      border-color: var(--gold);
+      background: rgba(201, 168, 76, 0.1);
+      box-shadow: 0 0 15px rgba(201, 168, 76, 0.2);
+    }
+    .btn--lock-submit {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      border: none;
+      background: linear-gradient(135deg, var(--gold), #b8963e);
+      color: #050505;
+      font-family: var(--font-body);
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      transition: all 0.35s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(201, 168, 76, 0.2);
+    }
+    .btn--lock-submit:hover {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      box-shadow: 0 6px 25px rgba(201, 168, 76, 0.4);
+      transform: translateY(-2px);
+    }
+    .btn--lock-submit:active {
+      transform: translateY(0);
+    }
+    .lock-error {
+      color: #e04040;
+      font-size: 0.82rem;
+      font-weight: 500;
+      display: none;
+      margin-top: -6px;
+      letter-spacing: 0.02em;
+    }
+    .lock-divider {
+      width: 60px;
+      height: 1px;
+      background: rgba(201, 168, 76, 0.2);
+      margin: 4px 0;
+    }
+    .lock-telegram-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .lock-telegram-text {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+    }
+    .lock-telegram-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #ffffff;
+      background: rgba(36, 161, 222, 0.15);
+      border: 1px solid rgba(36, 161, 222, 0.4);
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .lock-telegram-btn:hover {
+      background: #24a1de;
+      border-color: #24a1de;
+      box-shadow: 0 0 20px rgba(36, 161, 222, 0.4);
+      transform: translateY(-2px);
+    }
+    .lock-telegram-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #24a1de;
+      flex-shrink: 0;
+    }
   </style>
+  <script>
+    (function() {
+      const isUnlocked = localStorage.getItem('site_unlocked') === 'true';
+      if (!isUnlocked) {
+        document.documentElement.classList.add('locked');
+      }
+    })();
+  </script>
 </head>
 
 <body>
+
+  <!-- PASSWORD LOCK SCREEN OVERLAY -->
+  <div id="lock-screen">
+    <div class="lock-container">
+      <div class="lock-logo-wrap">
+        <img src="logo.jpg" alt="CALIWORLDWIDE Logo" class="lock-logo" />
+      </div>
+      <div class="lock-title-group">
+        <h1 class="lock-title">CALIWORLDWIDE</h1>
+        <p class="lock-subtitle">Crafted for the finest. Enter password to access.</p>
+      </div>
+      <form class="lock-form" id="lock-form" onsubmit="return false;">
+        <div class="lock-input-group">
+          <input type="password" id="lock-password-input" class="lock-input" placeholder="••••" required autofocus autocomplete="off" />
+        </div>
+        <div class="lock-error" id="lock-error-msg">Incorrect password. Please try again.</div>
+        <button type="submit" class="btn--lock-submit">Enter Website</button>
+      </form>
+      <div class="lock-divider"></div>
+      <div class="lock-telegram-group">
+        <p class="lock-telegram-text">Need access?</p>
+        <a href="https://t.me/caliworldwidevip" target="_blank" rel="noopener noreferrer" class="lock-telegram-btn">
+          <span class="lock-telegram-icon">
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.53-1.39.51-.46-.01-1.35-.26-2.01-.48-.81-.27-1.46-.42-1.4-.88.03-.24.37-.49 1.03-.75 4.04-1.76 6.74-2.92 8.09-3.48 3.85-1.6 4.64-1.88 5.17-1.89.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.16-.03.25z"/>
+            </svg>
+          </span>
+          Message Admin
+        </a>
+      </div>
+    </div>
+  </div>
 
   <!-- NOISE OVERLAY -->
   <div class="noise-overlay" aria-hidden="true"></div>
@@ -2416,6 +2663,102 @@
         renderer.setSize(w, h);
         material.uniforms.iResolution.value.set(w, h);
       });
+    })();
+  </script>
+  
+  <!-- LOCK SCREEN VERIFICATION LOGIC -->
+  <script>
+    (function() {
+      // Check if unlocked already, if so do nothing
+      if (localStorage.getItem('site_unlocked') === 'true') {
+        // Clean up the overlay immediately if already unlocked
+        const ls = document.getElementById('lock-screen');
+        if (ls) ls.remove();
+        return;
+      }
+
+      const lockScreen = document.getElementById('lock-screen');
+      const lockForm = document.getElementById('lock-form');
+      const passwordInput = document.getElementById('lock-password-input');
+      const errorMsg = document.getElementById('lock-error-msg');
+
+      // Focus input immediately on load
+      setTimeout(function() {
+        if (passwordInput) passwordInput.focus();
+      }, 100);
+
+      // The SHA-256 hash of "7777"
+      const correctHash = '41c991eb6a66242c0454191244278183ce58cf4a6bcd372f799e4b9cc01886af';
+
+      // SHA-256 helper function using native Web Crypto API
+      async function sha256(message) {
+        const msgBuffer = new TextEncoder().encode(message);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        return hashHex;
+      }
+
+      // Handle submit
+      lockForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const enteredPassword = passwordInput.value;
+        
+        try {
+          const hash = await sha256(enteredPassword);
+          if (hash === correctHash) {
+            // Unlock success!
+            localStorage.setItem('site_unlocked', 'true');
+            document.documentElement.classList.remove('locked');
+            lockScreen.classList.add('fade-out');
+            
+            // Clean up the overlay from DOM after transition
+            setTimeout(function() {
+              lockScreen.remove();
+            }, 500);
+          } else {
+            // Incorrect password
+            errorMsg.style.display = 'block';
+            passwordInput.value = '';
+            passwordInput.focus();
+            
+            // Shake effect on container
+            const container = lockScreen.querySelector('.lock-container');
+            if (container) {
+              container.style.animation = 'none';
+              // Trigger reflow
+              void container.offsetWidth;
+              container.style.animation = 'lockShake 0.4s ease';
+            }
+          }
+        } catch (err) {
+          console.error('Cryptographic hashing error:', err);
+          // Fallback check in case Web Crypto fails (e.g. non-HTTPS local environment in some browsers)
+          if (enteredPassword === '7777') {
+            localStorage.setItem('site_unlocked', 'true');
+            document.documentElement.classList.remove('locked');
+            lockScreen.classList.add('fade-out');
+            setTimeout(function() {
+              lockScreen.remove();
+            }, 500);
+          } else {
+            errorMsg.style.display = 'block';
+            passwordInput.value = '';
+            passwordInput.focus();
+          }
+        }
+      });
+
+      // Simple shake animation styles added programmatically
+      const styleSheet = document.createElement('style');
+      styleSheet.textContent = `
+        @keyframes lockShake {
+          0%, 100% { transform: translateX(0); }
+          20%, 60% { transform: translateX(-8px); }
+          40%, 80% { transform: translateX(8px); }
+        }
+      `;
+      document.head.appendChild(styleSheet);
     })();
   </script>
 </body>
