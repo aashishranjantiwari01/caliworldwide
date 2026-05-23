@@ -600,6 +600,21 @@
       margin-bottom: 28px;
     }
 
+    /* Hero CTA buttons wrapper */
+    .hero__cta-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      .hero__cta-group {
+        align-items: flex-start;
+      }
+    }
+
     /* Golden glass CTA button */
     .btn--glass {
       position: relative;
@@ -1648,6 +1663,7 @@
   <div class="mobile-overlay" id="mobile-overlay"></div>
   <div class="mobile-menu" id="mobile-menu">
     <a href="#products" class="mobile-link">Our Selection</a>
+    <a href="catalog.html" class="mobile-link">Full Catalog</a>
     <a href="#order" class="mobile-link">Order Now</a>
     <a href="#footer" class="mobile-link">Contact</a>
   </div>
@@ -1671,13 +1687,17 @@
       <div class="hero__slide active" data-slide="0">
         <div class="hero__info">
           <h2 class="hero__product-name">BLACK<br>WIDOW</h2>
-          <div class="hero__product-price">CHF 1,350</div>
-          <p class="hero__product-desc">Dense, crystal-coated buds with deep purple undertones. Powerful body effect
-            with an earthy, spicy aroma.</p>
-          <a href="#products" class="btn--glass hero-cta-btn">
-            Order Now
-            <span class="btn--glass__arrow">→</span>
-          </a>
+          <div class="hero__product-price">$1,350</div>
+          <div class="hero__cta-group">
+            <a href="#products" class="btn--glass hero-cta-btn">
+              Order Now
+              <span class="btn--glass__arrow">→</span>
+            </a>
+            <a href="catalog.html" class="btn--glass hero-cta-btn">
+              Shop More
+              <span class="btn--glass__arrow">→</span>
+            </a>
+          </div>
         </div>
         <div class="hero__showcase">
           <div class="hero__showcase-frame">
@@ -1694,13 +1714,17 @@
       <div class="hero__slide" data-slide="1">
         <div class="hero__info">
           <h2 class="hero__product-name">PAPAYA<br>LEMONADE</h2>
-          <div class="hero__product-price">CHF 1,300</div>
-          <p class="hero__product-desc">Bright lime-green buds bursting with tropical citrus and sweet papaya notes.
-            Uplifting and energetic.</p>
-          <a href="#products" class="btn--glass hero-cta-btn">
-            Order Now
-            <span class="btn--glass__arrow">→</span>
-          </a>
+          <div class="hero__product-price">$1,300</div>
+          <div class="hero__cta-group">
+            <a href="#products" class="btn--glass hero-cta-btn">
+              Order Now
+              <span class="btn--glass__arrow">→</span>
+            </a>
+            <a href="catalog.html" class="btn--glass hero-cta-btn">
+              Shop More
+              <span class="btn--glass__arrow">→</span>
+            </a>
+          </div>
         </div>
         <div class="hero__showcase">
           <div class="hero__showcase-frame">
@@ -1717,13 +1741,17 @@
       <div class="hero__slide" data-slide="2">
         <div class="hero__info">
           <h2 class="hero__product-name">BAJA<br>BLAST</h2>
-          <div class="hero__product-price">CHF 1,750</div>
-          <p class="hero__product-desc">Frosty, crystal-laden buds with deep purple and green hues. Smooth, potent, and
-            irresistibly aromatic.</p>
-          <a href="#products" class="btn--glass hero-cta-btn">
-            Order Now
-            <span class="btn--glass__arrow">→</span>
-          </a>
+          <div class="hero__product-price">$1,750</div>
+          <div class="hero__cta-group">
+            <a href="#products" class="btn--glass hero-cta-btn">
+              Order Now
+              <span class="btn--glass__arrow">→</span>
+            </a>
+            <a href="catalog.html" class="btn--glass hero-cta-btn">
+              Shop More
+              <span class="btn--glass__arrow">→</span>
+            </a>
+          </div>
         </div>
         <div class="hero__showcase">
           <div class="hero__showcase-frame">
@@ -1832,7 +1860,7 @@
           class="product-card__img" loading="lazy" />
         <div class="product-card__body">
           <h3 class="product-card__name">BLACK WIDOW</h3>
-          <p class="product-card__price">CHF 1,350</p>
+          <p class="product-card__price">$1,350</p>
           <a href="#order" class="btn btn--filled">Order Now</a>
         </div>
       </article>
@@ -1842,7 +1870,7 @@
           class="product-card__img" loading="lazy" />
         <div class="product-card__body">
           <h3 class="product-card__name">PAPAYA LEMONADE</h3>
-          <p class="product-card__price">CHF 1,300</p>
+          <p class="product-card__price">$1,300</p>
           <a href="#order" class="btn btn--filled">Order Now</a>
         </div>
       </article>
@@ -1852,7 +1880,7 @@
           class="product-card__img" loading="lazy" />
         <div class="product-card__body">
           <h3 class="product-card__name">BAJA BLAST</h3>
-          <p class="product-card__price">CHF 1,750</p>
+          <p class="product-card__price">$1,750</p>
           <a href="#order" class="btn btn--filled">Order Now</a>
         </div>
       </article>
@@ -1866,6 +1894,12 @@
           <a href="#order" class="btn btn--filled">Order Now</a>
         </div>
       </article>
+    </div>
+    <div style="text-align: center; margin-top: 50px;" class="reveal">
+      <a href="catalog.html" class="btn--glass" style="display: inline-flex; padding: 18px 48px; font-size: 0.9rem;">
+        View Full Catalog
+        <span class="btn--glass__arrow">→</span>
+      </a>
     </div>
   </section>
 
@@ -1956,9 +1990,15 @@
     document.querySelectorAll('.hero-cta-btn').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
+        var href = btn.getAttribute('href');
+        var isExternal = href && !href.startsWith('#');
         if (pageTransition) {
           pageTransition.classList.add('active');
           setTimeout(function () {
+            if (isExternal) {
+              window.location.href = href;
+              return;
+            }
             pageTransition.style.transition = 'opacity 0.4s ease';
             pageTransition.style.opacity = '0';
             var target = document.getElementById('products');
